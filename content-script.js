@@ -18,7 +18,7 @@ document.getElementsByTagName("body")[0].onload = () => {
                     //let finalEmailDomain = emailDomain.substring(emailDomain.indexOf(">")+1)
                     //finalEmailDomain = finalEmailDomain.substring(0, finalEmailDomain.indexOf("<"))
                     console.log(emailDomain)
-                    fetch(encodeURI("http://localhost:23144/dns-check"), 
+                    fetch(encodeURI("https://kamil.warczek.ovh:23144/dns-check"), 
                     {
                         method: 'POST',
                         headers: {
