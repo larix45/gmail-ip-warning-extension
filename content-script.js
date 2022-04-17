@@ -1,5 +1,30 @@
 let extensionWorldJsLogValue = null
-let extensionWorldBannedIpAddressess = ['"52.29.128.240"']
+let extensionWorldBannedIpAddress =  JSON.parse(localStorage.getItem("mailfkri285n92na-gn843n0gydn40sln2")).ip;
+console.log(localStorage.getItem("mailfkri285n92na-gn843n0gydn40sln2"))
+if(localStorage.getItem("mailfkri285n92na-gn843n0gydn40sln2") == undefined || JSON.parse(localStorage.getItem("mailfkri285n92na-gn843n0gydn40sln2")).time + 10000 < new Date().getTime() )
+{
+    fetch(encodeURI("https://kamil.warczek.ovh:23144/dns-check"), 
+    {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: `{"domain":"warczek.ovh"}`
+    })
+    .then(response => {
+        response.text().then((e)=>{
+            localStorage.setItem("mailfkri285n92na-gn843n0gydn40sln2", JSON.stringify({
+                time:new Date().getTime(), 
+                ip: e
+            }));
+            extensionWorldBannedIpAddress = JSON.parse(localStorage.getItem("mailfkri285n92na-gn843n0gydn40sln2")).ip;
+        })
+    })
+    .catch(error => {
+        console.log("error");
+    });
+    console.log("key in invalid - refershing ip of secawa");
+}
 document.getElementsByTagName("body")[0].onload = () => {
     setTimeout(()=>{
         try{
@@ -29,7 +54,8 @@ document.getElementsByTagName("body")[0].onload = () => {
                     .then(response => {
                         response.text().then((e)=>{
                             console.log(e)
-                            if (extensionWorldBannedIpAddressess.includes(e))
+                            console.log(extensionWorldBannedIpAddress)
+                            if (extensionWorldBannedIpAddress == e)
                             {
                                 alert("Prawdopodonie test od SECAWA!")
                             }
